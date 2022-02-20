@@ -24,31 +24,47 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
+
     - name: Checkout API4KP
       uses: actions/checkout@v2
       with:
         repository: API4KBs/api4kbs
         ref: develop
-        
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml    
-    
+        path: api4kbs
+
     - name: Checkout BOM
       uses: actions/checkout@v2
       with:
         repository: API4KBs/kmdp-bom
         ref: develop
-
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+        path: kmdp-bpm
 
     - name: Checkout Impl
       uses: actions/checkout@v2
       with:
         repository: API4KBs/kmdp-impl
         ref: develop
+        path: kmdp-impl
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+
+
+
+    - name: Cache Maven packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2         
+
+
+        
+    - name: Build API4KP
+      run: mvn -B package --file api4kbs/pom.xml    
+
+    - name: Build BOM
+      run: mvn -B package --file kmdp-bom/pom.xml
+
+    - name: Build Impl
+      run: mvn -B package --file kmdp-impl/pom.xml
 
    
