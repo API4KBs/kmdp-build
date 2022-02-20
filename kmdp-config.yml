@@ -1,0 +1,6 @@
+version: "2.1"
+dependencies: [embedded dependencies in the same file]
+
+default: [default build information]
+
+build: [build information]
