@@ -1,6 +1,17 @@
 version: "2.1"
-dependencies: [embedded dependencies in the same file]
+dependencies: 
+  - project: API4KBs/api4kbs
+  - project: API4KBs/kmdp-bom
+  - project: API4KBs/kmdp-models
+    dependencies:
+      - project: API4KBs/api4kbs
+      - project: API4KBs/kmdp-bom
 
-default: [default build information]
+default:
+  build-command:
+    current: mvn clean install
+    after:
+      current: rm -rf ./*
+      
 
-build: [build information]
+build:
