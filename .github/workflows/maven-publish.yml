@@ -29,7 +29,7 @@ jobs:
         token: ${{secrets.API4KP_TOKEN}}
         
     - name: Deploy API4KP
-      run: mvn -B deploy -Ppublic -s $GITHUB_WORKSPACE/settings.xml
+      run: mvn -B deploy -Ppublic -s ${{ github.workspace }}/settings.xml
       env:
         GITHUB_TOKEN: ${{secrets.API4KP_TOKEN}}
         GITHUB_ACTOR: 'sotty'
@@ -52,7 +52,7 @@ jobs:
         token: ${{secrets.API4KP_TOKEN}}
         
     - name: Build BOM
-      run: mvn -B deploy -Ppublic -s $GITHUB_WORKSPACE/settings.xml 
+      run: mvn -B deploy -Ppublic -s ${{ github.workspace }}/settings.xml 
       env:
         GITHUB_TOKEN: ${{secrets.API4KP_TOKEN}}
         GITHUB_ACTOR: 'sotty'
@@ -71,7 +71,7 @@ jobs:
         token: ${{secrets.API4KP_TOKEN}}
         
     - name: Build Impl
-      run: mvn -B deploy -Ppublic -s $GITHUB_WORKSPACE/settings.xml
+      run: mvn -B deploy -Ppublic -s ${{ github.workspace }}/settings.xml
       env:
         GITHUB_TOKEN: ${{secrets.API4KP_TOKEN}}    
         GITHUB_ACTOR: 'sotty'
