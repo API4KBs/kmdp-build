@@ -34,13 +34,7 @@ jobs:
     - name: Build BOM
       run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml"
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Clean BOM
-      uses: AutoModality/action-clean@v1 
-      
-      
-      
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
 
 
     - name: Checkout API4KP
@@ -48,21 +42,16 @@ jobs:
       with:
         repository: API4KBs/api4kbs
         ref: develop
-        token: ${{secrets.API4KP_TOKEN}}
         
     - name: Deploy API4KP
-      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true 
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml"
       env:
-        GITHUB_TOKEN: ${{ secrets.API4KP_TOKEN }}
-        GITHUB_ACTOR: 'sotty'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
       
     - name: Upload API4KP
       uses: actions/upload-artifact@v2
       with:
-       path: '${{ github.workspace }}/**/target/*.jar'     
-      
-    - name: Clean API4KP
-      uses: AutoModality/action-clean@v1   
+       path: '${{ github.workspace }}/**/target/*.jar'      
       
 
 
@@ -73,18 +62,13 @@ jobs:
       with:
         repository: API4KBs/kmdp-models
         ref: develop
-        token: ${{secrets.API4KP_TOKEN}}
         
     - name: Build Impl
-      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true 
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml"
       env:
-        GITHUB_TOKEN: ${{ secrets.API4KP_TOKEN }}    
-        GITHUB_ACTOR: 'sotty'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
 
     - name: Upload Impl
       uses: actions/upload-artifact@v2
       with:
        path: '${{ github.workspace }}/**/target/*.jar'
-
-    - name: Clean Impl
-      uses: AutoModality/action-clean@v1              
