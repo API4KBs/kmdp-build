@@ -32,7 +32,7 @@ jobs:
         ref: develop
         
     - name: Build BOM
-      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml"
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
 
@@ -44,7 +44,7 @@ jobs:
         ref: develop
         
     - name: Deploy API4KP
-      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml"
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
       
@@ -64,7 +64,7 @@ jobs:
         ref: develop
         
     - name: Build Impl
-      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml"
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
 
