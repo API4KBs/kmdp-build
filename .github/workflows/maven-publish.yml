@@ -20,6 +20,25 @@ jobs:
 
 
 
+    - name: Checkout BOM
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-bom
+        ref: develop
+        token: ${{secrets.API4KP_TOKEN}}
+        
+    - name: Build BOM
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true 
+      env:
+        GITHUB_TOKEN: ${{ secrets.API4KP_TOKEN }}
+        GITHUB_ACTOR: 'sotty'
+        
+    - name: Clean BOM
+      uses: AutoModality/action-clean@v1 
+      
+      
+      
+
 
     - name: Checkout API4KP
       uses: actions/checkout@v2.3.4
@@ -29,7 +48,7 @@ jobs:
         token: ${{secrets.API4KP_TOKEN}}
         
     - name: Deploy API4KP
-      run: mvn -B deploy -Ppublic
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true 
       env:
         GITHUB_TOKEN: ${{ secrets.API4KP_TOKEN }}
         GITHUB_ACTOR: 'sotty'
@@ -44,23 +63,6 @@ jobs:
       
 
 
-    - name: Checkout BOM
-      uses: actions/checkout@v2.3.4
-      with:
-        repository: API4KBs/kmdp-bom
-        ref: develop
-        token: ${{secrets.API4KP_TOKEN}}
-        
-    - name: Build BOM
-      run: mvn -B deploy -Ppublic 
-      env:
-        GITHUB_TOKEN: ${{ secrets.API4KP_TOKEN }}
-        GITHUB_ACTOR: 'sotty'
-        
-    - name: Clean BOM
-      uses: AutoModality/action-clean@v1 
-
-
 
 
     - name: Checkout Impl
@@ -71,7 +73,7 @@ jobs:
         token: ${{secrets.API4KP_TOKEN}}
         
     - name: Build Impl
-      run: mvn -B deploy -Ppublic
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true 
       env:
         GITHUB_TOKEN: ${{ secrets.API4KP_TOKEN }}    
         GITHUB_ACTOR: 'sotty'
