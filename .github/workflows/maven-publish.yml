@@ -19,6 +19,14 @@ jobs:
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
 
+    - name: Read Settings
+      id: settingz
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ${{ github.workspace }}/settings.xml
+    - name: Echo Settings
+      run: echo "${{ steps.settingz.outputs.content }}"
+
     - name: Checkout API4KP
       uses: actions/checkout@v2.3.4
       with:
