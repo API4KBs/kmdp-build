@@ -16,7 +16,8 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         server-id: github 
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
+        settings-path: ${{ github.workspace }} 
+        cache: maven
 
 
 
@@ -31,13 +32,13 @@ jobs:
     - name: Deploy API4KP
       run: mvn -B deploy -Ppublic -s ${{ github.workspace }}/settings.xml
       env:
-        GITHUB_TOKEN: ${{secrets.API4KP_TOKEN}}
+        GITHUB_TOKEN: ${{ secrets.API4KP_TOKEN }}
         GITHUB_ACTOR: 'sotty'
       
     - name: Upload API4KP
       uses: actions/upload-artifact@v2
       with:
-       path: target/**/*.jar      
+       path: '${{ github.workspace }}/**/target/*.jar'     
       
     - name: Clean API4KP
       uses: AutoModality/action-clean@v1   
@@ -54,7 +55,7 @@ jobs:
     - name: Build BOM
       run: mvn -B deploy -Ppublic -s ${{ github.workspace }}/settings.xml 
       env:
-        GITHUB_TOKEN: ${{secrets.API4KP_TOKEN}}
+        GITHUB_TOKEN: ${{ secrets.API4KP_TOKEN }}
         GITHUB_ACTOR: 'sotty'
         
     - name: Clean BOM
@@ -73,13 +74,13 @@ jobs:
     - name: Build Impl
       run: mvn -B deploy -Ppublic -s ${{ github.workspace }}/settings.xml
       env:
-        GITHUB_TOKEN: ${{secrets.API4KP_TOKEN}}    
+        GITHUB_TOKEN: ${{ secrets.API4KP_TOKEN }}    
         GITHUB_ACTOR: 'sotty'
 
     - name: Upload Impl
       uses: actions/upload-artifact@v2
       with:
-       path: target/**/*.jar  
+       path: '${{ github.workspace }}/**/target/*.jar'
 
     - name: Clean Impl
       uses: AutoModality/action-clean@v1              
