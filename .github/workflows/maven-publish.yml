@@ -7,11 +7,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions: 
+      contents: read
+      packages: write 
 
     steps:
-    
-    - name: Check env
-      run: echo "__${{secrets.API4KP_TOKEN}}__"
           
     - name: Set up JDK 11
       uses: actions/setup-java@v2
@@ -30,13 +30,12 @@ jobs:
       with:
         repository: API4KBs/kmdp-bom
         ref: develop
-        token: ${{secrets.API4KP_TOKEN}}
+        token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Build BOM
       run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true 
       env:
-        GITHUB_TOKEN: ${{ secrets.API4KP_TOKEN }}
-        GITHUB_ACTOR: 'sotty'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Clean BOM
       uses: AutoModality/action-clean@v1 
