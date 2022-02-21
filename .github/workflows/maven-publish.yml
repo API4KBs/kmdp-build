@@ -10,7 +10,6 @@ jobs:
     permissions: 
       contents: read
       packages: write 
-      deployments: write
 
     steps:
           
@@ -31,10 +30,9 @@ jobs:
       with:
         repository: API4KBs/kmdp-bom
         ref: develop
-        token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Build BOM
-      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true 
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s ~/.m2/settings.xml
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
