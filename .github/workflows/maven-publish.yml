@@ -20,6 +20,19 @@ jobs:
         distribution: 'adopt'
         server-id: github 
         settings-path: "${{ github.workspace }}/.." 
+        
+        
+# (meta) Maven configurable archetype plugin
+
+    - name: Checkout Archetype plugin
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/maven-cfg-archetype-plugin
+        ref: main
+        
+    - name: Deploy Archetype plugin
+      run: mvn -B install -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+ 
                
 ## kmdp-bom
 
