@@ -20,10 +20,8 @@ jobs:
         distribution: 'adopt'
         server-id: github 
         settings-path: "${{ github.workspace }}/.." 
-        
-        
-
-
+               
+## kmdp-bom
 
     - name: Checkout BOM
       uses: actions/checkout@v2.3.4
@@ -36,6 +34,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
 
+## api4kp
 
     - name: Checkout API4KP
       uses: actions/checkout@v2.3.4
@@ -53,9 +52,7 @@ jobs:
       with:
        path: '${{ github.workspace }}/**/target/*.jar'      
       
-
-
-
+## kmdp-models (aka kmdp-impl)
 
     - name: Checkout Impl
       uses: actions/checkout@v2.3.4
@@ -72,3 +69,219 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
        path: '${{ github.workspace }}/**/target/*.jar'
+        
+## kmdp-standards 
+
+    - name: Checkout Standards
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-standard-models-impl
+        ref: develop
+        
+    - name: Build Standards
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload Standards
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'
+     
+## kmdp-openaapi-archetype 
+
+    - name: Checkout Archetype
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-archetype
+        ref: develop
+        
+    - name: Build Archetype
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload Archetype
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'
+  
+## kmdp-api
+
+    - name: Checkout API
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-api
+        ref: develop
+    
+    - name: Code-gen API
+      run: mvn -B clean install -Prefresh --no-transfer-progress
+      
+    - name: Build API
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload API
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'  
+
+## kmdp-spring-monitoring
+
+    - name: Checkout Spring-Monitoring
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-spring-monitoring
+        ref: develop
+    
+    - name: Build Spring-Monitoring
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload Spring-Monitoring
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'
+
+
+## kmdp-artifact-repository
+
+    - name: Checkout Artifact Repo
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-artifact-repository
+        ref: develop
+    
+    - name: Build Artifact Repo
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload Artifact Repo
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'  
+
+
+## kmdp-language
+
+    - name: Checkout Language
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-language
+        ref: develop
+    
+    - name: Build Language
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload Language
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'  
+       
+## kmdp-knowledgebase
+
+    - name: Checkout KnowledgeBase
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-knowledgebase-service
+        ref: develop
+    
+    - name: Build KnowledgeBase
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload KnowledgeBase
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'  
+
+## kmdp-reasoning
+
+    - name: Checkout Reasoning
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-reasoning-service
+        ref: develop
+    
+    - name: Build Reasoning
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload Reasoning
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'
+       
+
+## kmdp-asseet-repo
+
+    - name: Checkout Asset Repo
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-asset-repository
+        ref: develop
+    
+    - name: Build Asset Repo
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload Asset Repo
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'
+
+
+## kmdp-complex-ops
+
+    - name: Checkout Complex Ops
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-complex-ops-impl
+        ref: develop
+    
+    - name: Build Complex Ops
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload Complex Ops
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'
+
+
+# Examples and Demos
+
+# API4KP Examples
+
+    - name: Checkout Examples
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/api4kp-examples
+        ref: develop
+    
+    - name: Build Examples
+      run: mvn -B test -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+   
+## Demo Terminology Server   
+   
+    - name: Checkout Demo Terms Server 
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/demo-terminology-service
+        ref: develop
+    
+    - name: Build Demo Terms Server
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
