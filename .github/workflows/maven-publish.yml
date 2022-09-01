@@ -287,7 +287,24 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
        path: '${{ github.workspace }}/**/target/*.jar'
+       
+## kmdp-trisotech-asset-repository       
 
+    - name: Checkout Trisotech KARS
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-trisotech-asset-repository
+        ref: develop
+    
+    - name: Build TT KARS
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload TT KARS
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'
 
 # Examples and Demos
 
