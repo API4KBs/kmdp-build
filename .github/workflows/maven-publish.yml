@@ -250,6 +250,24 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
        path: '${{ github.workspace }}/**/target/*.jar'
+       
+## kmdp-terminology-server       
+
+    - name: Checkout KMDP Terminology Provider
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: API4KBs/kmdp-terminology-server
+        ref: develop
+    
+    - name: Build Terminology Server
+      run: mvn -B deploy -Ppublic -Dmaven.source.includePom=true -s "${{ github.workspace }}/../settings.xml" --no-transfer-progress
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+    - name: Upload Terminology Server
+      uses: actions/upload-artifact@v2
+      with:
+       path: '${{ github.workspace }}/**/target/*.jar'
 
 
 ## kmdp-complex-ops
